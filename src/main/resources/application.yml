@@ -1,3 +1,7 @@
 spring:
   application:
     name: SmartParking
+
+aws:
+  iot:
+    endpoint: a10q4l8jmbuqc1-ats.iot.us-east-1.amazonaws.com

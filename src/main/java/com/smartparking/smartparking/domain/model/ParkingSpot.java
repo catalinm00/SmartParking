@@ -63,4 +63,8 @@ public class ParkingSpot {
         this.reservation = null;
         this.state = SpotState.FREE;
     }
+
+    public boolean isFree() {
+        return state == SpotState.FREE;
+    }
 }

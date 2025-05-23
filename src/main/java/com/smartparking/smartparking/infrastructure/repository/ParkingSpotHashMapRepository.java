@@ -22,7 +22,8 @@ public class ParkingSpotHashMapRepository implements ParkingSpotRepository {
     public List<ParkingSpot> findFreeSpotsByRoadSegment(String roadSegment) {
         return map.values().stream()
                 .filter(
-                        spot -> spot.getRoadSegment().equals(roadSegment))
+                        spot -> spot.getRoadSegment().equals(roadSegment) && spot.isFree()
+                )
                 .toList();
     }
 
