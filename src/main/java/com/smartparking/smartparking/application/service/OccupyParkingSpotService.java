@@ -7,8 +7,6 @@ import com.smartparking.smartparking.domain.exception.ParkingSpotNotFoundExcepti
 import com.smartparking.smartparking.domain.repository.ParkingSpotRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 public class OccupyParkingSpotService implements UseCaseCommand<VoidResponse, OccupyParkingSpotCommand> {
     private final ParkingSpotRepository repository;
