@@ -19,7 +19,7 @@ public class RegisterParkingSpotService
 
     @Override
     public ParkingSpotResponse execute(RegisterParkingSpotCommand cmd) {
-        var spot = new ParkingSpot(cmd.roadSegment());
+        var spot = new ParkingSpot(cmd.id(), cmd.roadSegment());
         parkingSpotRepository.save(spot);
         return ParkingSpotResponse.of(spot);
     }

@@ -11,10 +11,10 @@ import java.util.UUID;
 
 @Component
 public class ParkingSpotHashMapRepository implements ParkingSpotRepository {
-    private HashMap<UUID, ParkingSpot> map = new HashMap<>();
+    private HashMap<String, ParkingSpot> map = new HashMap<>();
 
     @Override
-    public Optional<ParkingSpot> findById(UUID id) {
+    public Optional<ParkingSpot> findById(String id) {
         return Optional.ofNullable(map.get(id));
     }
 

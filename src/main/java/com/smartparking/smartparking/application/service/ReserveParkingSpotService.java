@@ -21,7 +21,7 @@ public class ReserveParkingSpotService implements UseCaseCommand<ReservationResp
 
     @Override
     public ReservationResponse execute(ReserveParkingSpotCommand cmd) {
-        var spot = repository.findById(UUID.fromString(cmd.spotId()))
+        var spot = repository.findById(cmd.spotId())
                 .orElseThrow(ParkingSpotNotFoundException::new);
         spot.reserve(cmd.vehicleId());
         repository.save(spot);

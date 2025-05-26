@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Repository
 public interface ParkingSpotRepository {
-    public Optional<ParkingSpot> findById(UUID id);
+    public Optional<ParkingSpot> findById(String id);
     public List<ParkingSpot> findFreeSpotsByRoadSegment(String roadSegment);
     public ParkingSpot delete(ParkingSpot parkingSpot);
     public ParkingSpot save(ParkingSpot parkingSpot);

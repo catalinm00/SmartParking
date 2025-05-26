@@ -4,21 +4,19 @@ import com.smartparking.smartparking.domain.exception.ParkingSpotAlreadyOcuppied
 import com.smartparking.smartparking.domain.exception.ParkingSpotAlreadyReservedException;
 import com.smartparking.smartparking.domain.exception.ReservationNotOwnedByVehicleException;
 
-import java.util.UUID;
-
 public class ParkingSpot {
-    private final UUID id;
+    private final String id;
     private SpotState state;
     private final String roadSegment;
     private Reservation reservation;
 
-    public ParkingSpot(String roadSegment) {
-        this.id = UUID.randomUUID();
+    public ParkingSpot(String id, String roadSegment) {
+        this.id = id;
         this.state = SpotState.FREE;
         this.roadSegment = roadSegment;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 

@@ -19,7 +19,7 @@ public class OccupyParkingSpotService implements UseCaseCommand<VoidResponse, Oc
 
     @Override
     public VoidResponse execute(OccupyParkingSpotCommand cmd) {
-        var spot = repository.findById(UUID.fromString(cmd.spotId()))
+        var spot = repository.findById(cmd.spotId())
                 .orElseThrow(ParkingSpotNotFoundException::new);
         spot.occupy(cmd.vehicleId());
         repository.save(spot);

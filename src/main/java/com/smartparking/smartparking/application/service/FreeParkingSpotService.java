@@ -20,7 +20,7 @@ public class FreeParkingSpotService implements UseCaseCommand<VoidResponse, Free
 
     @Override
     public VoidResponse execute(FreeParkingSpotCommand cmd) {
-        var spot = repository.findById(UUID.fromString(cmd.spotId()))
+        var spot = repository.findById(cmd.spotId())
                 .orElseThrow(ParkingSpotNotFoundException::new);
         spot.free(cmd.vehicleId());
         repository.save(spot);
