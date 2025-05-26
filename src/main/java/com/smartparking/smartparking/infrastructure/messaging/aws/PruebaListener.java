@@ -1,12 +1,11 @@
-package com.smartparking.smartparking.infrastructure.messaging;
+package com.smartparking.smartparking.infrastructure.messaging.aws;
 
 import com.amazonaws.services.iot.client.*;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class PruebaListener {
     private static final Logger log = LoggerFactory.getLogger(PruebaListener.class);
     public static final String TOPIC = "parking/prueba";
