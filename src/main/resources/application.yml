@@ -5,7 +5,8 @@ spring:
 aws:
   iot:
     endpoint: a10q4l8jmbuqc1-ats.iot.us-east-1.amazonaws.com
+
 server:
   error:
-    whitelabel:
-      enabled: false
+    include-stacktrace: never
+    include-path: never

@@ -8,8 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface ParkingSpotRepository {
-    public Optional<ParkingSpot> findById(String id);
-    public List<ParkingSpot> findFreeSpotsByRoadSegment(String roadSegment);
-    public ParkingSpot delete(ParkingSpot parkingSpot);
-    public ParkingSpot save(ParkingSpot parkingSpot);
+    Optional<ParkingSpot> findById(String id);
+    List<ParkingSpot> findFreeSpotsByRoadSegment(String roadSegment);
+    ParkingSpot delete(ParkingSpot parkingSpot);
+    ParkingSpot save(ParkingSpot parkingSpot);
 }
