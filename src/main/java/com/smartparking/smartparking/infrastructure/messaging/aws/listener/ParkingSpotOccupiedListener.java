@@ -3,8 +3,8 @@ package com.smartparking.smartparking.infrastructure.messaging.aws.listener;
 import com.amazonaws.services.iot.client.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.smartparking.smartparking.application.command.FreeParkingSpotCommand;
-import com.smartparking.smartparking.application.service.FreeParkingSpotService;
+import com.smartparking.smartparking.application.command.OccupyParkingSpotCommand;
+import com.smartparking.smartparking.application.service.OccupyParkingSpotService;
 import com.smartparking.smartparking.domain.event.ParkingSpotFreedEvent;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
@@ -12,19 +12,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ParkingSpotFreedListener {
-    private static final Logger log = LoggerFactory.getLogger(ParkingSpotFreedListener.class);
-    public static final String TOPIC = "smartbollard/+/freed";
+public class ParkingSpotOccupiedListener {
+    private static final Logger log = LoggerFactory.getLogger(ParkingSpotOccupiedListener.class);
+    public static final String TOPIC = "smartbollard/+/occupied";
     private final AWSIotMqttClient client;
     private final ObjectMapper objectMapper;
-    private final FreeParkingSpotService freeParkingSpotService;
+    private final OccupyParkingSpotService service;
 
-    public ParkingSpotFreedListener(AWSIotMqttClient client,
-                                    ObjectMapper objectMapper,
-                                    FreeParkingSpotService service) {
+    public ParkingSpotOccupiedListener(AWSIotMqttClient client,
+                                       ObjectMapper objectMapper,
+                                       OccupyParkingSpotService service) {
         this.client = client;
         this.objectMapper = objectMapper;
-        this.freeParkingSpotService = service;
+        this.service = service;
     }
 
     @PostConstruct
@@ -45,7 +45,7 @@ public class ParkingSpotFreedListener {
             try {
                 log.info("Message received: {}", message.getPayload());
                 var event = objectMapper.readValue(message.getStringPayload(), ParkingSpotFreedEvent.class);
-                freeParkingSpotService.execute(FreeParkingSpotCommand.of(event));
+                service.execute(OccupyParkingSpotCommand.of(event));
             } catch (JsonProcessingException e) {
                 log.warn("Error parsing JSON: {}", e.getMessage());
             }
