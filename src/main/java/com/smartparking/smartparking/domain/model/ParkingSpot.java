@@ -47,6 +47,9 @@ public class ParkingSpot {
         if (state == SpotState.OCCUPIED) {
             throw new ParkingSpotAlreadyOcuppiedException();
         }
+        if (!reservation.ownedBy(vehicleId)) {
+            throw new ReservationNotOwnedByVehicleException();
+        }
         state = SpotState.OCCUPIED;
     }
 
