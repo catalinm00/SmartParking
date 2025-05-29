@@ -1,0 +1,54 @@
+package com.smartparking.smartparking.infrastructure.messaging.aws.listener;
+
+import com.amazonaws.services.iot.client.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smartparking.smartparking.application.command.RegisterParkingSpotCommand;
+import com.smartparking.smartparking.application.service.RegisterParkingSpotService;
+import com.smartparking.smartparking.domain.event.RegisterParkingSpotEvent;
+import jakarta.annotation.PostConstruct;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+@Component
+public class RegisterParkingSpotListener {
+    private static final Logger log = LoggerFactory.getLogger(RegisterParkingSpotListener.class);
+    public static final String TOPIC = "smartbollard/+/register";
+    private final AWSIotMqttClient client;
+    private final ObjectMapper objectMapper;
+    private final RegisterParkingSpotService registerService;
+
+    public RegisterParkingSpotListener(AWSIotMqttClient client,
+                                       ObjectMapper objectMapper,
+                                       RegisterParkingSpotService service) {
+        this.client = client;
+        this.objectMapper = objectMapper;
+        this.registerService = service;
+    }
+
+    @PostConstruct
+    public void init() throws AWSIotException {
+        AWSIotTopic topic = new TopicHandler(TOPIC, AWSIotQos.QOS1);
+        client.subscribe(topic);
+        log.info("Subscribed to topic: {}", topic.getTopic());
+    }
+
+    class TopicHandler extends AWSIotTopic {
+
+        public TopicHandler(String topic, AWSIotQos qos) {
+            super(topic, qos);
+        }
+
+        @Override
+        public void onMessage(AWSIotMessage message) {
+            try {
+                log.info("Message received: {}", message.getPayload());
+                var event = objectMapper.readValue(message.getStringPayload(), RegisterParkingSpotEvent.class);
+                registerService.execute(RegisterParkingSpotCommand.of(event));
+            } catch (JsonProcessingException e) {
+                log.warn("Error parsing JSON: {}", e.getMessage());
+            }
+        }
+    }
+}
