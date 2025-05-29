@@ -43,7 +43,7 @@ public class RegisterParkingSpotListener {
         @Override
         public void onMessage(AWSIotMessage message) {
             try {
-                log.info("Message received: {}", message.getPayload());
+                log.info("Message received: {}", new String(message.getPayload()));
                 var event = objectMapper.readValue(message.getStringPayload(), RegisterParkingSpotEvent.class);
                 registerService.execute(RegisterParkingSpotCommand.of(event));
             } catch (JsonProcessingException e) {
